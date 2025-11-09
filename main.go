@@ -9,13 +9,19 @@ import (
 const IMTPower = 2
 
 func main() {
+	defer func() {
+		if r := recover(); r != nil {
+			fmt.Println("Recover", r)
+		}
+	}()
 	fmt.Println("__ Калькулятор индекса массы тела __")
 	for {
 		userKG, userHeight := getUserInput()         // присваиваем в переменные вывод из функции getUserInput
 		IMT, err := calculateIMT(userKG, userHeight) // после расчёта функции calculateIMT с аргументами userKG и userHeight, которые мы в неё передали, мы получили результат и присвоили его переменной IMT
 		if err != nil {
-			fmt.Println("Не заданы параметры для расчёта")
-			continue
+			// fmt.Println("Не заданы параметры для расчёта")
+			// continue
+			panic("Не заданы параметры для расчёта")
 		}
 		outputResult(IMT) // Выводим результат IMT благодаря функции outputResult
 		// Цикл. Выполнеяем проверку опроса, хочет пользовать продолжить или нет через функцию checkRepeatCalculation. Если данная функция возвращает true после успешного ответа пользователя "y",
